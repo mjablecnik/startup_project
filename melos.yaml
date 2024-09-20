@@ -1,0 +1,6 @@
+name: startup_project
+
+packages:
+  - apps/**
+  - packages/**
+
