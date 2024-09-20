@@ -1,4 +1,4 @@
-import 'package:design_package_example/design_package_example.dart';
+import 'package:design_package_template/design_package_example.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart' as mt;
 import 'package:flutter/painting.dart';
