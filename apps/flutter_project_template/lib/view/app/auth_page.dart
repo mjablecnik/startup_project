@@ -24,7 +24,7 @@ class _AuthPageState extends State<AuthPage> {
     if (isValid != true) return;
 
     final form = _formKey.currentState?.value;
-    context.injector.get<AuthCubit>().tokenAuthLogin(
+    context.get<AuthCubit>().tokenAuthLogin(
           userName: form!['name'],
           password: form['password'],
           onSuccess: (user) => Navigator.of(context).pushReplacementNamed(Routes.home),
@@ -35,7 +35,7 @@ class _AuthPageState extends State<AuthPage> {
   @override
   Widget build(BuildContext context) {
     return DefaultLayout(
-      title: context.injector.get<CachedData>().appName,
+      title: context.get<CachedData>().appName,
       drawer: null,
       actions: [
         PopupMenuButton(

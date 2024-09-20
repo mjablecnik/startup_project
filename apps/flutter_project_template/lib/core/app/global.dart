@@ -79,5 +79,5 @@ class InjectorProvider extends InheritedWidget {
 }
 
 extension BuildContextExtension on BuildContext {
-  Injector get injector => InjectorProvider.of(this).injector;
+  T get<T>({String? key}) => InjectorProvider.of(this).injector.get<T>(key: key);
 }

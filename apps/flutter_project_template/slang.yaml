@@ -4,7 +4,7 @@ input_directory: lib/core/i18n
 output_directory: lib/core/i18n
 input_file_pattern: .i18n.yaml
 output_file_name: translations.g.dart
-translate_var: t
+translate_var: i18n
 key_case: camel
 interfaces:
   Error: errors.*

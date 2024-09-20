@@ -27,7 +27,7 @@ class DefaultDrawer extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 12.0),
                   child: Text(
-                    context.injector.get<AuthCubit>().loggedUser?.fullName ?? "<unknown>",
+                    context.get<AuthCubit>().loggedUser?.fullName ?? "<unknown>",
                     style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
@@ -66,7 +66,7 @@ class DefaultDrawer extends StatelessWidget {
             title: Text(context.t.menu.logout),
             onTap: () {
               Navigator.pop(context);
-              context.injector.get<AuthCubit>().logout();
+              context.get<AuthCubit>().logout();
               Navigator.of(context).pushReplacementNamed(Routes.auth);
             },
           ),

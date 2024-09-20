@@ -1187,6 +1187,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.31.1"
+  slang_build_runner:
+    dependency: "direct dev"
+    description:
+      name: slang_build_runner
+      sha256: "6e60160e8000b91824c47221b20d9642e7408287a5a21837ecefc75270197586"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.31.0"
   slang_flutter:
     dependency: "direct main"
     description:

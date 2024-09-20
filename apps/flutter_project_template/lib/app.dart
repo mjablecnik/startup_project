@@ -7,7 +7,7 @@ import 'package:flutter_project_template/core/app/global.dart';
 import 'package:flutter_project_template/core/i18n/translations.g.dart';
 import 'package:flutter_project_template/view/app/home_page.dart';
 import 'package:flutter_project_template/view/app/auth_page.dart';
-import 'package:flutter_project_template/view/app/index_page.dart';
+import 'package:flutter_project_template/view/app/start_page.dart';
 import 'package:theme_mode_handler/theme_mode_handler.dart';
 
 class MyApp extends StatelessWidget {
@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ThemeModeHandler(
-      manager: context.injector.get<ThemeService>(),
+      manager: context.get<ThemeService>(),
       builder: (ThemeMode themeMode) {
         return NotificationHandler(
           child: GestureDetector(
@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
               initialRoute: Routes.index,
               navigatorKey: App.navigatorKey,
               routes: {
-                Routes.index: (context) => const IndexPage(),
+                Routes.index: (context) => const StartPage(),
                 Routes.about: (context) => const AboutPage(),
                 Routes.auth: (context) => const AuthPage(),
                 Routes.home: (context) => const HomePage(),

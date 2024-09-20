@@ -4,20 +4,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_project_template/core/app/global.dart';
 import 'package:flutter_project_template/logic/cubits/auth_cubit.dart';
 
-class IndexPage extends StatefulWidget {
-  const IndexPage({super.key});
+class StartPage extends StatefulWidget {
+  const StartPage({super.key});
 
   @override
-  State<IndexPage> createState() => _IndexPageState();
+  State<StartPage> createState() => _StartPageState();
 }
 
-class _IndexPageState extends State<IndexPage> {
+class _StartPageState extends State<StartPage> {
   @override
   void initState() {
     super.initState();
     Timer(const Duration(seconds: 1), () async {
       final navigator = Navigator.of(context);
-      final user = await context.injector.get<AuthCubit>().getLoggedUser();
+      final user = await context.get<AuthCubit>().getLoggedUser();
       if (user == null) {
         navigator.pushReplacementNamed(Routes.auth);
       } else {
