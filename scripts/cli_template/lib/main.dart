@@ -1,6 +1,6 @@
 import 'package:cli_template/app_info.dart';
 
-import 'argument_parser.dart';
+import 'args_parser.dart';
 
 /*
 
