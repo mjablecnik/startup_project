@@ -1,8 +1,6 @@
 import 'package:args/args.dart';
-import 'package:cli_menu/cli_menu.dart';
-import 'package:dcli/dcli.dart';
 
-const String version = '0.0.1';
+import 'app_info.dart';
 
 ArgParser buildParser() {
   return ArgParser()
@@ -31,26 +29,24 @@ void printUsage(ArgParser argParser) {
   print(argParser.usage);
 }
 
-void parse(List<String> arguments) {
+Future<void> parse(List<String> arguments) async {
   final ArgParser argParser = buildParser();
   try {
     final ArgResults results = argParser.parse(arguments);
     bool verbose = false;
 
-    // Process the parsed arguments.
     if (results.wasParsed('help')) {
       printUsage(argParser);
       return;
     }
     if (results.wasParsed('version')) {
-      print('cli_template version: $version');
+      print("Version: ${await AppInfo().version}");
       return;
     }
     if (results.wasParsed('verbose')) {
       verbose = true;
     }
 
-    // Act on the arguments provided.
     print('Positional arguments: ${results.rest}');
     if (verbose) {
       print('[VERBOSE] All arguments: ${results.arguments}');
@@ -64,8 +60,5 @@ void parse(List<String> arguments) {
 }
 
 void main(List<String> arguments) {
-  print('Pick favorite color:');
-  final menu = Menu(['Red', 'Green', 'Orange', 'Fuchsia']);
-  final result = menu.choose();
-  print('You picked: $result');
+  parse(arguments);
 }
