@@ -5,7 +5,7 @@ import 'args_parser.dart';
 /*
 
 Example of usage:
-dart lib/main.dart -V --name Martin -t dart,python,java
+dart lib/main.dart -V --name Martin -t dart,python,java -d 'This is my description'
 
  */
 void main(List<String> args) {
@@ -17,18 +17,15 @@ void main(List<String> args) {
     } else {
       print("Verbose: ${args.isVerbose}");
       print("Name: ${args.name}");
+      print("Description: ${args.description}");
       print("Tags: ${args.tags}");
     }
   }, onError: (error) {
-    if (error is FormatException) {
-      print(error.message);
-      showHelp();
-      return;
-    }
-    print(error);
+    print(error.message);
+    showHelp();
+    return;
   });
 }
-
 
 showHelp() {
   print("\nUsage:");

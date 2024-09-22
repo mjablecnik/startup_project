@@ -1,10 +1,12 @@
 import 'package:args/args.dart';
+import 'package:cli_template/core.dart';
 
 class Arguments {
   final bool isVerbose;
   final bool showHelp;
   final bool showVersion;
   final String? name;
+  final String? description;
   final List<String>? tags;
 
   const Arguments({
@@ -12,6 +14,7 @@ class Arguments {
     required this.showHelp,
     required this.isVerbose,
     required this.name,
+    required this.description,
     required this.tags,
   });
 
@@ -21,6 +24,12 @@ class Arguments {
         'name',
         abbr: 'n',
         help: 'Setup name.',
+      )
+      ..addOption(
+        'description',
+        abbr: 'd',
+        mandatory: true,
+        help: 'Setup description.',
       )
       ..addMultiOption(
         'tags',
@@ -49,6 +58,14 @@ class Arguments {
 
   static get usage => _parser().usage;
 
+  static _getOptionOrThrowException(ArgResults results, {required String option, String? errorMessage}) {
+    if (results.wasParsed(option)) {
+      return results.option(option);
+    } else {
+      throw MissingOptionException(message: errorMessage ?? 'Missing option: \'$option\'');
+    }
+  }
+
   static Future<Arguments> parse(List<String> arguments) async {
     final ArgParser argParser = _parser();
     try {
@@ -59,6 +76,7 @@ class Arguments {
         isVerbose: results.wasParsed('verbose'),
         showVersion: results.wasParsed('version'),
         name: results.wasParsed('name') ? results.option('name') : null,
+        description: _getOptionOrThrowException(results, option: 'description'),
         tags: results.wasParsed('tags') ? results.multiOption('tags') : null,
       );
 
