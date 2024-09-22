@@ -1,6 +1,31 @@
 import 'package:args/args.dart';
 import 'package:cli_template/core.dart';
 
+enum CommandType { option, multipleOption, flag }
+
+enum Commands {
+  name(abbr: 'n', isMandatory: true, commandType: CommandType.option, commandHelp: 'Setup name.'),
+  description(abbr: 'd', isMandatory: true, commandType: CommandType.option, commandHelp: 'Setup description.'),
+  tags(abbr: 't', commandType: CommandType.multipleOption, commandHelp: 'Setup tags.'),
+
+  help(abbr: 'h', commandType: CommandType.flag, commandHelp: 'Print this usage information.'),
+  verbose(abbr: 'V', commandType: CommandType.flag, commandHelp: 'Show additional command output.'),
+  version(abbr: 'v', commandType: CommandType.flag, commandHelp: 'Print the tool version.'),
+  ;
+
+  const Commands({
+    this.abbr,
+    this.isMandatory = false,
+    required this.commandHelp,
+    required this.commandType,
+  });
+
+  final String? abbr;
+  final bool isMandatory;
+  final String commandHelp;
+  final CommandType commandType;
+}
+
 class Arguments {
   final bool isVerbose;
   final bool showHelp;
@@ -19,41 +44,18 @@ class Arguments {
   });
 
   static ArgParser _parser() {
-    return ArgParser()
-      ..addOption(
-        'name',
-        abbr: 'n',
-        help: 'Setup name.',
-      )
-      ..addOption(
-        'description',
-        abbr: 'd',
-        mandatory: true,
-        help: 'Setup description.',
-      )
-      ..addMultiOption(
-        'tags',
-        abbr: 't',
-        help: 'Setup tags.',
-      )
-      ..addFlag(
-        'help',
-        abbr: 'h',
-        negatable: false,
-        help: 'Print this usage information.',
-      )
-      ..addFlag(
-        'verbose',
-        abbr: 'V',
-        negatable: false,
-        help: 'Show additional command output.',
-      )
-      ..addFlag(
-        'version',
-        abbr: 'v',
-        negatable: false,
-        help: 'Print the tool version.',
-      );
+    final argParser = ArgParser();
+    for (var value in Commands.values) {
+      switch (value.commandType) {
+        case CommandType.option:
+          argParser.addOption(value.name, abbr: value.abbr, mandatory: value.isMandatory, help: value.commandHelp);
+        case CommandType.multipleOption:
+          argParser.addMultiOption(value.name, abbr: value.abbr, help: value.commandHelp);
+        case CommandType.flag:
+          argParser.addFlag(value.name, abbr: value.abbr, help: value.commandHelp);
+      }
+    }
+    return argParser;
   }
 
   static get usage => _parser().usage;
@@ -77,12 +79,12 @@ class Arguments {
   static Future<Arguments> parse(List<String> arguments) async {
     final ArgResults results = _parser().parse(arguments);
     return Arguments(
-      showHelp: results.wasParsed('help'),
-      isVerbose: results.wasParsed('verbose'),
-      showVersion: results.wasParsed('version'),
-      name: _getOptionOrNull(results, option: 'name'),
-      description: _getOptionOrThrowException(results, option: 'description'),
-      tags: _getMultiOptionOrNull(results, option: 'tags'),
+      showHelp: results.wasParsed(Commands.help.name),
+      isVerbose: results.wasParsed(Commands.verbose.name),
+      showVersion: results.wasParsed(Commands.version.name),
+      name: _getOptionOrNull(results, option: Commands.name.name),
+      description: _getOptionOrThrowException(results, option: Commands.description.name),
+      tags: _getMultiOptionOrNull(results, option: Commands.tags.name),
     );
   }
 }
