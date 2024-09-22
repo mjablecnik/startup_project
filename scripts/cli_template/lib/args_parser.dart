@@ -67,22 +67,14 @@ class Arguments {
   }
 
   static Future<Arguments> parse(List<String> arguments) async {
-    final ArgParser argParser = _parser();
-    try {
-      final ArgResults results = argParser.parse(arguments);
-
-      return Arguments(
-        showHelp: results.wasParsed('help'),
-        isVerbose: results.wasParsed('verbose'),
-        showVersion: results.wasParsed('version'),
-        name: results.wasParsed('name') ? results.option('name') : null,
-        description: _getOptionOrThrowException(results, option: 'description'),
-        tags: results.wasParsed('tags') ? results.multiOption('tags') : null,
-      );
-
-    } on FormatException catch (e) {
-      rethrow;
-    }
+    final ArgResults results = _parser().parse(arguments);
+    return Arguments(
+      showHelp: results.wasParsed('help'),
+      isVerbose: results.wasParsed('verbose'),
+      showVersion: results.wasParsed('version'),
+      name: results.wasParsed('name') ? results.option('name') : null,
+      description: _getOptionOrThrowException(results, option: 'description'),
+      tags: results.wasParsed('tags') ? results.multiOption('tags') : null,
+    );
   }
 }
-
