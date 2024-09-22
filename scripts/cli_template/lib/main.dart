@@ -1,6 +1,7 @@
-import 'package:cli_template/app_info.dart';
+import 'dart:io';
 
-import 'args_parser.dart';
+import 'package:cli_template/app_info.dart';
+import 'package:cli_template/args_parser.dart';
 
 /*
 
@@ -21,9 +22,13 @@ void main(List<String> args) {
       print("Tags: ${args.tags}");
     }
   }, onError: (error) {
-    print(error.message);
-    showHelp();
-    return;
+    try {
+      print(error.message);
+      showHelp();
+    } catch (e) {
+      print("$error\n");
+      stdout.write(error.stackTrace);
+    }
   });
 }
 
