@@ -58,6 +58,14 @@ class Arguments {
 
   static get usage => _parser().usage;
 
+  static _getOptionOrNull(ArgResults results, {required String option}) {
+    return results.wasParsed(option) ? results.option(option) : null;
+  }
+
+  static _getMultiOptionOrNull(ArgResults results, {required String option}) {
+    return results.wasParsed(option) ? results.multiOption(option) : null;
+  }
+
   static _getOptionOrThrowException(ArgResults results, {required String option, String? errorMessage}) {
     if (results.wasParsed(option)) {
       return results.option(option);
@@ -72,9 +80,9 @@ class Arguments {
       showHelp: results.wasParsed('help'),
       isVerbose: results.wasParsed('verbose'),
       showVersion: results.wasParsed('version'),
-      name: results.wasParsed('name') ? results.option('name') : null,
+      name: _getOptionOrNull(results, option: 'name'),
       description: _getOptionOrThrowException(results, option: 'description'),
-      tags: results.wasParsed('tags') ? results.multiOption('tags') : null,
+      tags: _getMultiOptionOrNull(results, option: 'tags'),
     );
   }
 }
