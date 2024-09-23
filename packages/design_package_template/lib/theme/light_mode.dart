@@ -1,8 +1,5 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart' as mt;
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
 import 'package:design_package_template/core/text_styles.dart';
 import 'package:design_package_template/design/buttons/buttons.style.dart';
 import 'package:design_package_template/core/colors.dart';
