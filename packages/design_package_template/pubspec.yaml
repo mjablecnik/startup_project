@@ -31,12 +31,13 @@ dependencies:
   flutter:
     sdk: flutter
   theme_tailor_annotation: 3.0.1
-  storybook_toolkit: 1.2.0
   stack_trace: 1.11.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
+  storybook_toolkit: 1.2.0
   storybook_toolkit_tester: 1.2.0
 
   theme_tailor: 3.0.1

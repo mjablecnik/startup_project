@@ -2,10 +2,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart' as mt;
 import 'package:flutter/painting.dart';
 import 'package:design_package_template/core/text_styles.dart';
-import 'package:design_package_template/design/buttons/buttons.style.dart';
 import 'package:design_package_template/core/colors.dart';
-import 'package:design_package_template/design/buttons/simple_button/simple_button.style.dart';
-import 'package:design_package_template/design/design.theme.dart';
+import 'package:design_package_template/design/design.dart';
 
 get darkTheme {
   return mt.ThemeData(

@@ -1,10 +1,10 @@
+import 'package:design_package_template/design/buttons/simple_button/simple_button.dart';
 import 'package:flutter/widgets.dart';
-import 'package:design_package_template/storybook.dart';
 import 'package:design_package_template/core/colors.dart';
 import 'package:storybook_toolkit/storybook_toolkit.dart';
 
-import 'simple_button.dart';
-import 'simple_button.style.dart';
+import '../../storybook.dart';
+
 
 String textKnob(BuildContext context) => context.knobs.text(label: 'Button text', initial: 'START!');
 

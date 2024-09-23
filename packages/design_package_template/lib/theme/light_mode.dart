@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart' as mt;
 import 'package:flutter/material.dart';
 import 'package:design_package_template/core/text_styles.dart';
-import 'package:design_package_template/design/buttons/buttons.style.dart';
 import 'package:design_package_template/core/colors.dart';
-import 'package:design_package_template/design/buttons/simple_button/simple_button.style.dart';
-import 'package:design_package_template/design/design.theme.dart';
+import 'package:design_package_template/design/design.dart';
 
 ThemeData get lightTheme {
   return mt.ThemeData(

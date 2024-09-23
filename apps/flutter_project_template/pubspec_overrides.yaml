@@ -1,0 +1,4 @@
+# melos_managed_dependency_overrides: design_package_template
+dependency_overrides:
+  design_package_template:
+    path: ../../packages/design_package_template

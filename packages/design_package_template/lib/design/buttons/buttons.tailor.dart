@@ -2,7 +2,7 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, unused_element, unnecessary_cast
 
-part of 'buttons.style.dart';
+part of 'buttons.dart';
 
 // **************************************************************************
 // TailorAnnotationsGenerator
