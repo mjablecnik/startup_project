@@ -3,12 +3,7 @@ import 'dart:io';
 import 'package:cli_template/app_info.dart';
 import 'package:cli_template/args_parser.dart';
 
-/*
 
-Example of usage:
-dart lib/main.dart -V --name Martin -t dart,python,java -d 'This is my description'
-
- */
 void main(List<String> args) {
   Arguments.parse(args).then((args) async {
     if (args.showHelp) {
