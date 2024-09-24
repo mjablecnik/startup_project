@@ -47,17 +47,12 @@ class AuthRepository {
     required String userName,
     required String password,
   }) async {
-    try {
-      final User user = await _login('emilys', 'emilyspass');
-      if (user.token != null) restApiService.setAuthToken(user.token!);
-      userRepository.saveLoggedUser(user);
-    } on ServerException catch (e) {
-      logger.exception(e);
-      return null;
-    }
+    final User user = await _login('emilys', 'emilyspass');
+    if (user.token != null) restApiService.setAuthToken(user.token!);
+    userRepository.saveLoggedUser(user);
   }
 
-  Future<User?> login({
+  Future<User> login({
     required String userName,
     required String password,
     required LoginType type,
