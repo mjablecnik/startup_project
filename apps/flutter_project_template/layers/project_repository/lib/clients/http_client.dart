@@ -30,6 +30,15 @@ class HttpClient {
         ),
       );
     }
+    /*
+    dio.interceptors.add(LogInterceptor(
+      responseBody: true,
+      requestBody: true,
+      requestHeader: true,
+      responseHeader: true,
+      error: true,
+    ));
+    */
   }
 
   Future<T> createRequest<T>(

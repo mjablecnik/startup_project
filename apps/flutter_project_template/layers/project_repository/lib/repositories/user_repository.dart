@@ -5,9 +5,10 @@ import 'package:project_repository/clients/secure_storage.dart';
 import 'package:project_repository/global.dart';
 
 class UserRepository {
-  UserRepository({required HttpClient httpClient}) {
+  UserRepository({required HttpClient httpClient, required SecureStorage storage}) {
     _api = httpClient;
     _client = httpClient.dio;
+    _storage = storage;
   }
 
   late final Dio _client;

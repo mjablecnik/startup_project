@@ -28,28 +28,24 @@ class AuthRepository {
     );
   }
 
-  _basicAuthLogin({
+  Future<User> _basicAuthLogin({
     required String userName,
     required String password,
   }) async {
-    try {
-      restApiService.setBasicAuth(userName, password);
-      final User user = await userRepository.getUser(userName);
-      userRepository.saveLoggedUser(user);
-      return user;
-    } on ServerException catch (e) {
-      logger.exception(e);
-      return null;
-    }
+    restApiService.setBasicAuth(userName, password);
+    final User user = await userRepository.getUser(userName);
+    userRepository.saveLoggedUser(user);
+    return user;
   }
 
-  _tokenAuthLogin({
+  Future<User> _tokenAuthLogin({
     required String userName,
     required String password,
   }) async {
     final User user = await _login('emilys', 'emilyspass');
     if (user.token != null) restApiService.setAuthToken(user.token!);
     userRepository.saveLoggedUser(user);
+    return user;
   }
 
   Future<User> login({
@@ -73,7 +69,7 @@ class AuthRepository {
   Future<User?> loggedUser() async {
     try {
       final User user = await userRepository.getLoggedUser();
-      restApiService.setAuthToken(user.token!);
+      if (user.token != null) restApiService.setAuthToken(user.token!);
       return user;
     } catch (e) {
       return null;

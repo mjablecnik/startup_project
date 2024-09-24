@@ -1,5 +1,5 @@
+import 'package:talker/talker.dart';
 import 'package:talker_dio_logger/talker_dio_logger.dart';
-import 'package:talker_flutter/talker_flutter.dart';
 
 final logger = Logger.get;
 
@@ -9,7 +9,7 @@ class Logger {
   static final Logger _instance = Logger._internal();
 
   Logger._internal() {
-    _talker = TalkerFlutter.init(
+    _talker = Talker(
       settings: TalkerSettings(
         useHistory: false,
         useConsoleLogs: true,

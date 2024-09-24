@@ -16,5 +16,10 @@ class Product with _$Product {
   }) = _Product;
 
   factory Product.fromJson(Map<String, Object?> json) => _$ProductFromJson(json);
+
+  @override
+  String toString() {
+    return toJson().toString();
+  }
 }
 

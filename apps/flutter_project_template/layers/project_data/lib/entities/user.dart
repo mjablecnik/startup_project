@@ -12,7 +12,7 @@ class User with _$User {
     required String firstName,
     required String lastName,
     @JsonKey(name: "username") required String userName,
-    String? token,
+    @JsonKey(name: "accessToken") String? token,
   }) = _User;
 
   factory User.anonymous() {
@@ -26,4 +26,9 @@ class User with _$User {
   String get fullName => "$firstName $lastName";
 
   factory User.fromJson(Map<String, Object?> json) => _$UserFromJson(json);
+
+  @override
+  String toString() {
+    return toJson().toString();
+  }
 }
