@@ -27,13 +27,4 @@ class StorageService {
       return _storage.remove(StorageKey.loggedUser.name);
     }
   }
-
-  Future<void> saveDeviceId(String deviceId) {
-    return _storage.saveString(StorageKey.deviceId.name, deviceId);
-  }
-
-  Future<String?> getDeviceId() async {
-    String? deviceId = await _storage.getString(StorageKey.deviceId.name);
-    return deviceId;
-  }
 }

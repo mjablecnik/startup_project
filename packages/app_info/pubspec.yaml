@@ -1,0 +1,20 @@
+name: app_info
+description: Project contain info about package and device
+version: 0.1.0
+
+environment:
+  sdk: '>=3.5.0 <4.0.0'
+
+dependencies:
+  mocktail: 1.0.4
+  flutter_offline: 3.0.1
+  device_info_plus: <=9.1.2      # Upgrade to higher version only after upgrade Java SDK to version 17
+  package_info_plus: <=4.0.1     # Upgrade to higher version only after upgrade Java SDK to version 17
+  flutter_secure_storage: 9.2.2
+  mobile_device_identifier: 0.0.2
+  android_device_id_generator: 0.1.1
+  internet_connection_checker: 1.0.0+1
+
+dev_dependencies:
+  lints: 4.0.0
+  test: 1.24.0
