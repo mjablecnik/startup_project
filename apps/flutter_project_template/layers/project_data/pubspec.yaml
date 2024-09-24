@@ -1,0 +1,19 @@
+name: project_data
+description: Project contain application data
+version: 0.1.0
+
+environment:
+  sdk: '>=3.5.0 <4.0.0'
+
+dependencies:
+  freezed: 2.4.7
+  freezed_annotation: 2.4.1
+  json_serializable: 6.8.0
+  json_annotation: 4.9.0
+  mek_data_class: 1.4.0
+
+dev_dependencies:
+  mek_data_class_generator: 1.5.1
+  build_runner: 2.4.12
+  lints: ^4.0.0
+  test: ^1.24.0
