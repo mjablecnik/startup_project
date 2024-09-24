@@ -2,29 +2,28 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:project_common/logger.dart';
 import 'package:project_data/entities/product.dart';
 import 'package:project_data/entities/user.dart';
 import 'package:project_repository/clients/http_client.dart';
-import 'package:talker/talker.dart';
 
 class MockRestApiService extends Mock implements RestApiService {}
 
 class RestApiService {
-  RestApiService({required HttpClient httpClient, required Talker logger}) {
+  RestApiService({required HttpClient httpClient}) {
     _api = httpClient;
     _client = httpClient.dio;
   }
 
   late final Dio _client;
   late final HttpClient _api;
-  late final Talker logger;
 
   bool _handleError(Function() callback) {
     try {
       callback.call();
       return true;
     } catch (e) {
-      logger.handle(e);
+      logger.exception(e);
       return false;
     }
   }

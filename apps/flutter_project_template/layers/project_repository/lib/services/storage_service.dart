@@ -1,22 +1,21 @@
 
+import 'package:project_common/logger.dart';
 import 'package:project_data/entities/user.dart';
 import 'package:project_repository/clients/secure_storage.dart';
 import 'package:project_repository/global.dart';
-import 'package:talker/talker.dart';
 
 class StorageService {
-  StorageService({required SecureStorage storage, required this.logger}) {
+  StorageService({required SecureStorage storage}) {
     _storage = storage;
   }
 
   late final SecureStorage _storage;
-  final Talker logger;
 
   Future<User?> getLoggedUser() async {
     try {
       return User.fromJson(await _storage.getMap(StorageKey.loggedUser.name));
     } catch (e) {
-      logger.error(e);
+      logger.exception(e);
       return null;
     }
   }

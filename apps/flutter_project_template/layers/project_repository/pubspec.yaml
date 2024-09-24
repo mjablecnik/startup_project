@@ -10,16 +10,15 @@ dependencies:
     sdk: flutter
 
   dio: 5.5.0+1
-  talker: <=4.1.2             # Upgrade to higher version only after upgrade Java SDK to version 17
-  talker_flutter: <=4.1.2     # Upgrade to higher version only after upgrade Java SDK to version 17
-  talker_dio_logger: <=4.1.2  # Upgrade to higher version only after upgrade Java SDK to version 17
   flutter_secure_storage: 9.2.2
   internet_connection_checker: 1.0.0+1
   mocktail: 1.0.4
 
+  project_common:
+    path: ../project_common
   project_data:
     path: ../project_data
 
 dev_dependencies:
-  lints: ^4.0.0
-  test: ^1.24.0
+  lints: 4.0.0
+  test: 1.24.0
