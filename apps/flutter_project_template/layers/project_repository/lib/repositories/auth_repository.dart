@@ -17,12 +17,11 @@ class AuthRepository {
   final HttpClient httpClient;
 
   Future<User> _login(String userName, String password) {
-    return httpClient.createRequest(
-      () => httpClient.post('/auth/login', data: {
-        'username': userName,
-        'password': password,
-      }),
-      (data) async => User.fromJson(data),
+    return httpClient.request(
+      path: '/auth/login',
+      method: HttpMethod.post,
+      data: {'username': userName, 'password': password},
+      onSuccess: (data) async => User.fromJson(data),
     );
   }
 

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/widgets.dart';
 import 'package:project_repository/clients/http_client.dart';
 import 'package:project_repository/clients/secure_storage.dart';
@@ -33,7 +35,11 @@ void main() {
 
   test('HttpClient', () async {
     print('\nHttpClient:');
-    final test = await httpClient.get('/test');
+    final test = await httpClient.request<String?>(
+      path: '/test',
+      method: HttpMethod.get,
+      onSuccess: (data) async => jsonEncode(data),
+    );
     expect(test.toString(), '{"status":"ok","method":"GET"}');
   });
 

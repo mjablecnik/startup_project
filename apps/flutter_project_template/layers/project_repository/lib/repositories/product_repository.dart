@@ -9,9 +9,10 @@ class ProductRepository {
   late final HttpClient _httpClient;
 
   Future<List<Product>> getProducts() async {
-    return _httpClient.createRequest(
-      () => _httpClient.get('/products'),
-      (data) async => [...data["products"].map((e) => Product.fromJson(e))],
+    return _httpClient.request(
+      path: '/products',
+      method: HttpMethod.get,
+      onSuccess: (data) async => [...data["products"].map((e) => Product.fromJson(e))],
     );
   }
 }

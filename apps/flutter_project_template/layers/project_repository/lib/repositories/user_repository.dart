@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 import 'package:project_data/entities/user.dart';
 import 'package:project_repository/clients/http_client.dart';
 import 'package:project_repository/clients/secure_storage.dart';
@@ -17,9 +16,10 @@ class UserRepository {
     try {
       return User.fromJson(await _storage.getMap(StorageKey.loggedUser.name));
     } catch (e) {
-      return _httpClient.createRequest(
-        () => _httpClient.get('/auth/me'),
-        (data) async => User.fromJson(data),
+      return _httpClient.request(
+        path: '/auth/me',
+        method: HttpMethod.get,
+        onSuccess: (data) async => User.fromJson(data),
       );
     }
   }

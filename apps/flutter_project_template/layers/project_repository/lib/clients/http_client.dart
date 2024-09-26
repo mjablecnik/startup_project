@@ -3,6 +3,8 @@ import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:project_common/logger.dart';
 import 'package:project_repository/exceptions.dart';
 
+enum HttpMethod { get, post, put, delete, head, options, patch }
+
 class HttpClient {
   late final Dio _dio;
 
@@ -54,32 +56,33 @@ class HttpClient {
     _dio.options.headers = {...map};
   }
 
-  Future<Response<T>> get<T>(
-    String path, {
+  Future<T> request<T>({
+    required String path,
+    required HttpMethod method,
     Object? data,
     Map<String, dynamic>? queryParameters,
+    Map<String, dynamic>? headers,
+    required Future<T> Function(dynamic data) onSuccess,
+    Future<ServerException?> Function(int? status, dynamic data)? onServerError,
   }) {
-    return _dio.get(path, data: data, queryParameters: queryParameters);
+    final options = Options(headers: headers, method: method.name.toUpperCase());
+    return _createRequest(
+      () => _dio.request(path, data: data, queryParameters: queryParameters, options: options),
+      onSuccess: onSuccess,
+      onServerError: onServerError,
+    );
   }
 
-  Future<Response<T>> post<T>(
-    String path, {
-    Object? data,
-    Map<String, dynamic>? queryParameters,
-  }) {
-    return _dio.post(path, data: data, queryParameters: queryParameters);
-  }
-
-  Future<T> createRequest<T>(
-    Future<Response> Function() request,
-    Future<T> Function(dynamic data) parseData, {
+  Future<T> _createRequest<T>(
+    Future<Response> Function() request, {
+    required Future<T> Function(dynamic data) onSuccess,
     Future<ServerException?> Function(int? status, dynamic data)? onServerError,
   }) async {
     try {
       final response = await request.call();
       if (response.statusCode == 200 && response.data != null) {
         try {
-          return await parseData(response.data);
+          return await onSuccess(response.data);
         } on Error catch (error) {
           logger.exception(error, stackTrace: error.stackTrace);
           throw ParseDataException();

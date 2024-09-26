@@ -1,11 +1,12 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:project_data/entities/base.dart';
 
 part 'user.freezed.dart';
 
 part 'user.g.dart';
 
 @freezed
-class User with _$User {
+class User extends BaseEntity with _$User {
   const User._();
 
   const factory User({
@@ -26,9 +27,4 @@ class User with _$User {
   String get fullName => "$firstName $lastName";
 
   factory User.fromJson(Map<String, Object?> json) => _$UserFromJson(json);
-
-  @override
-  String toString() {
-    return toJson().toString();
-  }
 }
