@@ -10,9 +10,9 @@ class MockInjector extends Mock implements AutoInjector {}
 
 AutoInjector repositoryInjector = AutoInjector();
 
-setupInjector() {
+setupInjector({required HttpClient httpClient}) {
   repositoryInjector
-    ..addInstance(HttpClient(apiUrl: "https://dummyjson.com", enableLogs: true, preventLargeResponses: false))
+    ..addInstance(httpClient)
     ..addSingleton(SecureStorage.new)
     ..addSingleton(AuthRepository.new)
     ..addSingleton(UserRepository.new)

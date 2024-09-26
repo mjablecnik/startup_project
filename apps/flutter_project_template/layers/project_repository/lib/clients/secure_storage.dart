@@ -2,6 +2,9 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:mocktail/mocktail.dart';
+
+class SecureStorageMock extends Mock implements SecureStorage {}
 
 class SecureStorage {
   late final FlutterSecureStorage _storage;

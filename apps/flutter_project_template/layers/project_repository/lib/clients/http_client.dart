@@ -1,9 +1,18 @@
 import 'package:dio/dio.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:mocktail/mocktail.dart';
 import 'package:project_common/logger.dart';
 import 'package:project_repository/exceptions.dart';
 
+class HttpClientMock extends Mock implements HttpClient {}
+
 enum HttpMethod { get, post, put, delete, head, options, patch }
+
+class HttpResponse {
+  const HttpResponse(this.data);
+  
+  final dynamic data;
+}
 
 class HttpClient {
   late final Dio _dio;
@@ -68,20 +77,17 @@ class HttpClient {
     }
   }
 
-  Future<T> request<T>({
+  Future<HttpResponse> request({
     required String path,
     required HttpMethod method,
     Object? data,
     Map<String, dynamic>? queryParameters,
     Map<String, dynamic>? headers,
-    required Future<T> Function(dynamic data) onSuccess,
-    Future<ServerException?> Function(int? status, dynamic data)? onServerError,
   }) {
     final options = Options(headers: headers, method: method.name.toUpperCase());
     return _createRequest(
       () => _dio.request(path, data: data, queryParameters: queryParameters, options: options),
-      onSuccess: onSuccess,
-      onServerError: onServerError,
+      onSuccess: (data) async => HttpResponse(data),
     );
   }
 

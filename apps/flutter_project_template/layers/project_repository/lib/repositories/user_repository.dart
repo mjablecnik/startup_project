@@ -16,11 +16,11 @@ class UserRepository {
     try {
       return User.fromJson(await _storage.getMap(StorageKey.loggedUser.name));
     } catch (e) {
-      return _httpClient.request(
+      final response = await _httpClient.request(
         path: '/auth/me',
         method: HttpMethod.get,
-        onSuccess: (data) async => User.fromJson(data),
       );
+      return User.fromJson(response.data);
     }
   }
 

@@ -28,13 +28,13 @@ class AuthRepository extends Repository {
     return httpClient.setHeader('authorization', null);
   }
 
-  Future<User> _login(String userName, String password) {
-    return httpClient.request(
+  Future<User> _login(String userName, String password) async {
+    final response = await httpClient.request(
       path: '/auth/login',
       method: HttpMethod.post,
       data: {'username': userName, 'password': password},
-      onSuccess: (data) async => User.fromJson(data),
     );
+    return User.fromJson(response.data);
   }
 
   Future<User> _basicAuthLogin({
