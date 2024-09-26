@@ -28,36 +28,36 @@ class AuthRepository extends Repository {
     return httpClient.setHeader('authorization', null);
   }
 
-  Future<User> _login(String userName, String password) async {
+  Future<UserLoaded> _login(String userName, String password) async {
     final response = await httpClient.request(
       path: '/auth/login',
       method: HttpMethod.post,
       data: {'username': userName, 'password': password},
     );
-    return User.fromJson(response.data);
+    return UserLoaded.fromJson(response.data);
   }
 
-  Future<User> _basicAuthLogin({
+  Future<UserLoaded> _basicAuthLogin({
     required String userName,
     required String password,
   }) async {
     _setBasicAuth(userName, password);
-    final User user = await userRepository.getUser(userName);
+    final UserLoaded user = await userRepository.getUser(userName);
     userRepository.saveLoggedUser(user);
     return user;
   }
 
-  Future<User> _tokenAuthLogin({
+  Future<UserLoaded> _tokenAuthLogin({
     required String userName,
     required String password,
   }) async {
-    final User user = await _login('emilys', 'emilyspass');
+    final UserLoaded user = await _login('emilys', 'emilyspass');
     if (user.token != null) _setAuthToken(user.token!);
     userRepository.saveLoggedUser(user);
     return user;
   }
 
-  Future<User> login({
+  Future<UserLoaded> login({
     required String userName,
     required String password,
     required LoginType type,
@@ -75,13 +75,9 @@ class AuthRepository extends Repository {
     return _removeAuth();
   }
 
-  Future<User?> loggedUser() async {
-    try {
-      final User user = await userRepository.getLoggedUser();
-      if (user.token != null) _setAuthToken(user.token!);
-      return user;
-    } catch (e) {
-      return null;
-    }
+  Future<UserLoaded> loggedUser() async {
+    final UserLoaded user = await userRepository.getLoggedUser();
+    if (user.token != null) _setAuthToken(user.token!);
+    return user;
   }
 }

@@ -12,21 +12,21 @@ class UserRepository {
   late final HttpClient _httpClient;
   late final SecureStorage _storage;
 
-  Future<User> getLoggedUser() async {
+  Future<UserLoaded> getLoggedUser() async {
     try {
-      return User.fromJson(await _storage.getMap(StorageKey.loggedUser.name));
+      return UserLoaded.fromJson(await _storage.getMap(StorageKey.loggedUser.name));
     } catch (e) {
       final response = await _httpClient.request(
         path: '/auth/me',
         method: HttpMethod.get,
       );
-      return User.fromJson(response.data);
+      return UserLoaded.fromJson(response.data);
     }
   }
 
-  Future<User> getUser(String userName) async {
+  Future<UserLoaded> getUser(String userName) async {
     Future.delayed(const Duration(seconds: 1));
-    return User(firstName: "John", lastName: "Doe", userName: userName);
+    return UserLoaded(firstName: "John", lastName: "Doe", userName: userName);
   }
 
   Future<void> saveLoggedUser(User? user) {

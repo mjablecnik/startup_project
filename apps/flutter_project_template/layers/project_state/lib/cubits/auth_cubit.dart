@@ -3,9 +3,8 @@ import 'package:project_data/entities/user.dart';
 import 'package:project_repository/repositories/auth_repository.dart';
 
 class AuthCubit extends Cubit<User?> {
-  AuthCubit({
-    required AuthRepository authRepository,
-  })  : _authRepository = authRepository,
+  AuthCubit({required AuthRepository authRepository})
+      : _authRepository = authRepository,
         super(null);
 
   late final AuthRepository _authRepository;

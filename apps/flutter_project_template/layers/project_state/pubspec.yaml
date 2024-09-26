@@ -7,8 +7,8 @@ environment:
 
 dependencies:
   bloc: 8.1.4
+  equatable: 2.0.5
   flutter_bloc: 8.1.6
-  bloc_test: 9.1.7
 
   project_data:
     path: ../project_data
@@ -16,5 +16,6 @@ dependencies:
     path: ../project_repository
 
 dev_dependencies:
+  bloc_test: 9.1.7
   lints: 4.0.0
   test: 1.24.0
