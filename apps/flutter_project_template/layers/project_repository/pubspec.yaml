@@ -10,9 +10,10 @@ dependencies:
     sdk: flutter
 
   dio: 5.5.0+1
+  mocktail: 1.0.4
+  auto_injector: 2.0.5
   flutter_secure_storage: 9.2.2
   internet_connection_checker: 1.0.0+1
-  mocktail: 1.0.4
 
   project_common:
     path: ../project_common

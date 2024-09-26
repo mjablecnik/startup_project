@@ -2,32 +2,16 @@ import 'dart:convert';
 
 import 'package:flutter/widgets.dart';
 import 'package:project_repository/clients/http_client.dart';
-import 'package:project_repository/clients/secure_storage.dart';
+import 'package:project_repository/global.dart';
 
 import 'package:project_repository/repositories/auth_repository.dart';
-import 'package:project_repository/repositories/user_repository.dart';
-import 'package:project_repository/repositories/repository.dart';
 import 'package:test/test.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-
-  final httpClient = HttpClient(
-    apiUrl: "https://dummyjson.com",
-    enableLogs: true,
-    preventLargeResponses: false,
-  );
-  final storage = SecureStorage();
-
-  final userRepository = UserRepository(
-    httpClient: httpClient,
-    storage: storage,
-  );
-
-  final authRepository = AuthRepository(
-    httpClient: httpClient,
-    userRepository: userRepository,
-  );
+  setupInjector();
+  final httpClient = repositoryInjector.get<HttpClient>();
+  final authRepository = repositoryInjector.get<AuthRepository>();
 
   test('HttpClient', () async {
     print('\nHttpClient:');
