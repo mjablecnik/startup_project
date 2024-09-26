@@ -43,17 +43,29 @@ class HttpClient {
     */
   }
 
-  setHeader(String key, String? value) {
-    if (value == null) {
-      if (_dio.options.headers.containsKey('authorization')) {
-        _dio.options.headers.remove('authorization');
+  bool setHeader(String key, String? value) {
+    try {
+      if (value == null) {
+        if (_dio.options.headers.containsKey('authorization')) {
+          _dio.options.headers.remove('authorization');
+        }
       }
+      _dio.options.headers[key] = value;
+      return true;
+    } catch (e) {
+      logger.exception(e);
+      return false;
     }
-    _dio.options.headers[key] = value;
   }
 
-  setHeaders(Map<String, String> map) {
-    _dio.options.headers = {...map};
+  bool setHeaders(Map<String, String> map) {
+    try {
+      _dio.options.headers = {...map};
+      return true;
+    } catch (e) {
+      logger.exception(e);
+      return false;
+    }
   }
 
   Future<T> request<T>({

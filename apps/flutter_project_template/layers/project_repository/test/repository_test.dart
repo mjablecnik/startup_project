@@ -6,7 +6,7 @@ import 'package:project_repository/clients/secure_storage.dart';
 
 import 'package:project_repository/repositories/auth_repository.dart';
 import 'package:project_repository/repositories/user_repository.dart';
-import 'package:project_repository/services/rest_api_service.dart';
+import 'package:project_repository/repositories/repository.dart';
 import 'package:test/test.dart';
 
 void main() {
@@ -18,9 +18,6 @@ void main() {
     preventLargeResponses: false,
   );
   final storage = SecureStorage();
-  final restApiService = RestApiService(
-    httpClient: httpClient,
-  );
 
   final userRepository = UserRepository(
     httpClient: httpClient,
@@ -29,7 +26,6 @@ void main() {
 
   final authRepository = AuthRepository(
     httpClient: httpClient,
-    restApiService: restApiService,
     userRepository: userRepository,
   );
 

@@ -1,20 +1,32 @@
+import 'dart:convert';
+
 import 'package:project_data/entities/user.dart';
 import 'package:project_repository/clients/http_client.dart';
 import 'package:project_repository/repositories/user_repository.dart';
-import 'package:project_repository/services/rest_api_service.dart';
+import 'package:project_repository/repositories/repository.dart';
 
 enum LoginType { basic, token }
 
-class AuthRepository {
+class AuthRepository extends Repository {
   const AuthRepository({
-    required this.restApiService,
     required this.userRepository,
-    required this.httpClient,
+    required super.httpClient,
   });
 
-  final RestApiService restApiService;
   final UserRepository userRepository;
-  final HttpClient httpClient;
+
+  bool _setBasicAuth(String userName, String password) {
+    String basicAuth = 'Basic ${base64Encode(utf8.encode('$userName:$password'))}';
+    return httpClient.setHeader('authorization', basicAuth);
+  }
+
+  bool _setAuthToken(String token) {
+    return httpClient.setHeader('authorization', token);
+  }
+
+  bool _removeAuth() {
+    return httpClient.setHeader('authorization', null);
+  }
 
   Future<User> _login(String userName, String password) {
     return httpClient.request(
@@ -29,7 +41,7 @@ class AuthRepository {
     required String userName,
     required String password,
   }) async {
-    restApiService.setBasicAuth(userName, password);
+    _setBasicAuth(userName, password);
     final User user = await userRepository.getUser(userName);
     userRepository.saveLoggedUser(user);
     return user;
@@ -40,7 +52,7 @@ class AuthRepository {
     required String password,
   }) async {
     final User user = await _login('emilys', 'emilyspass');
-    if (user.token != null) restApiService.setAuthToken(user.token!);
+    if (user.token != null) _setAuthToken(user.token!);
     userRepository.saveLoggedUser(user);
     return user;
   }
@@ -60,13 +72,13 @@ class AuthRepository {
 
   bool logout() {
     userRepository.saveLoggedUser(null);
-    return restApiService.removeAuth();
+    return _removeAuth();
   }
 
   Future<User?> loggedUser() async {
     try {
       final User user = await userRepository.getLoggedUser();
-      if (user.token != null) restApiService.setAuthToken(user.token!);
+      if (user.token != null) _setAuthToken(user.token!);
       return user;
     } catch (e) {
       return null;
