@@ -4,7 +4,7 @@ import 'package:project_common/logger.dart';
 import 'package:project_repository/exceptions.dart';
 
 class HttpClient {
-  late final Dio dio;
+  late final Dio _dio;
 
   final String apiUrl;
   final bool enableLogs;
@@ -16,7 +16,7 @@ class HttpClient {
     required this.preventLargeResponses,
   }) {
     //logger.log('DeviceId: ${cached.deviceId}');
-    dio = Dio(
+    _dio = Dio(
       BaseOptions(
         baseUrl: apiUrl,
         connectTimeout: const Duration(seconds: 5),
@@ -24,7 +24,7 @@ class HttpClient {
       ),
     );
     if (enableLogs) {
-      dio.interceptors.add(
+      _dio.interceptors.add(
         Logger.dioInterceptor(
           preventLargeResponses: preventLargeResponses,
         ),
@@ -39,6 +39,35 @@ class HttpClient {
       error: true,
     ));
     */
+  }
+
+  setHeader(String key, String? value) {
+    if (value == null) {
+      if (_dio.options.headers.containsKey('authorization')) {
+        _dio.options.headers.remove('authorization');
+      }
+    }
+    _dio.options.headers[key] = value;
+  }
+
+  setHeaders(Map<String, String> map) {
+    _dio.options.headers = {...map};
+  }
+
+  Future<Response<T>> get<T>(
+    String path, {
+    Object? data,
+    Map<String, dynamic>? queryParameters,
+  }) {
+    return _dio.get(path, data: data, queryParameters: queryParameters);
+  }
+
+  Future<Response<T>> post<T>(
+    String path, {
+    Object? data,
+    Map<String, dynamic>? queryParameters,
+  }) {
+    return _dio.post(path, data: data, queryParameters: queryParameters);
   }
 
   Future<T> createRequest<T>(

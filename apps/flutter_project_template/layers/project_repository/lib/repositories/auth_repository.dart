@@ -1,7 +1,5 @@
-import 'package:project_common/logger.dart';
 import 'package:project_data/entities/user.dart';
 import 'package:project_repository/clients/http_client.dart';
-import 'package:project_repository/exceptions.dart';
 import 'package:project_repository/repositories/user_repository.dart';
 import 'package:project_repository/services/rest_api_service.dart';
 
@@ -20,7 +18,7 @@ class AuthRepository {
 
   Future<User> _login(String userName, String password) {
     return httpClient.createRequest(
-      () => httpClient.dio.post('/auth/login', data: {
+      () => httpClient.post('/auth/login', data: {
         'username': userName,
         'password': password,
       }),

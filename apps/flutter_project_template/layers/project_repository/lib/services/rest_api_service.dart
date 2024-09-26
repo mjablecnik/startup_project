@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:dio/dio.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:project_common/logger.dart';
 import 'package:project_repository/clients/http_client.dart';
@@ -9,12 +8,10 @@ class MockRestApiService extends Mock implements RestApiService {}
 
 class RestApiService {
   RestApiService({required HttpClient httpClient}) {
-    _api = httpClient;
-    _client = httpClient.dio;
+    _httpClient = httpClient;
   }
 
-  late final Dio _client;
-  late final HttpClient _api;
+  late final HttpClient _httpClient;
 
   bool _handleError(Function() callback) {
     try {
@@ -29,21 +26,19 @@ class RestApiService {
   bool setBasicAuth(String userName, String password) {
     return _handleError(() {
       String basicAuth = 'Basic ${base64Encode(utf8.encode('$userName:$password'))}';
-      _client.options.headers['authorization'] = basicAuth;
+      _httpClient.setHeader('authorization', basicAuth);
     });
   }
 
   bool setAuthToken(String token) {
     return _handleError(() {
-      _client.options.headers['authorization'] = token;
+      _httpClient.setHeader('authorization', token);
     });
   }
 
   bool removeAuth() {
     return _handleError(() {
-      if (_client.options.headers.containsKey('authorization')) {
-        _client.options.headers.remove('authorization');
-      }
+      _httpClient.setHeader('authorization', null);
     });
   }
 }

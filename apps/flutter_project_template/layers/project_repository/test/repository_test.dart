@@ -33,7 +33,7 @@ void main() {
 
   test('HttpClient', () async {
     print('\nHttpClient:');
-    final test = await httpClient.dio.get('/test');
+    final test = await httpClient.get('/test');
     expect(test.toString(), '{"status":"ok","method":"GET"}');
   });
 

@@ -1,19 +1,16 @@
-import 'package:dio/dio.dart';
 import 'package:project_data/entities/product.dart';
 import 'package:project_repository/clients/http_client.dart';
 
 class ProductRepository {
   ProductRepository({required HttpClient httpClient}) {
-    _api = httpClient;
-    _client = httpClient.dio;
+    _httpClient = httpClient;
   }
 
-  late final Dio _client;
-  late final HttpClient _api;
+  late final HttpClient _httpClient;
 
   Future<List<Product>> getProducts() async {
-    return _api.createRequest(
-      () => _client.get('/products'),
+    return _httpClient.createRequest(
+      () => _httpClient.get('/products'),
       (data) async => [...data["products"].map((e) => Product.fromJson(e))],
     );
   }

@@ -6,21 +6,19 @@ import 'package:project_repository/global.dart';
 
 class UserRepository {
   UserRepository({required HttpClient httpClient, required SecureStorage storage}) {
-    _api = httpClient;
-    _client = httpClient.dio;
+    _httpClient = httpClient;
     _storage = storage;
   }
 
-  late final Dio _client;
-  late final HttpClient _api;
+  late final HttpClient _httpClient;
   late final SecureStorage _storage;
 
   Future<User> getLoggedUser() async {
     try {
       return User.fromJson(await _storage.getMap(StorageKey.loggedUser.name));
     } catch (e) {
-      return _api.createRequest(
-        () => _client.get('/auth/me'),
+      return _httpClient.createRequest(
+        () => _httpClient.get('/auth/me'),
         (data) async => User.fromJson(data),
       );
     }
