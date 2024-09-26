@@ -48,7 +48,7 @@ void main() {
 
   test('Get logged user', () async {
     final loggedUser = await authRepository.loggedUser();
-    final user = User.loaded(firstName: 'Emily', lastName: 'Johnson', userName: 'emilys', token: null);
+    final user = User(firstName: 'Emily', lastName: 'Johnson', userName: 'emilys', token: null);
     expect(loggedUser, user);
   });
 }

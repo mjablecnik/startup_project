@@ -9,28 +9,14 @@ part 'user.g.dart';
 class User extends BaseEntity with _$User {
   const User._();
 
-  const factory User.initial() = UserInitial;
-
-  const factory User.loading() = UserLoading;
-
-  const factory User.error(exception) = UserError;
-
-  const factory User.notFound() = UserNotFound;
-
-  const factory User.loaded({
+  const factory User({
     required String firstName,
     required String lastName,
     @JsonKey(name: "username") required String userName,
     @JsonKey(name: "accessToken") String? token,
-  }) = UserLoaded;
+  }) = _User;
 
-  String? get fullName {
-    if (this is UserLoaded) {
-      final user = this as UserLoaded;
-      return "${user.firstName} ${user.lastName}";
-    }
-    return null;
-  }
+  String? get fullName => "$firstName $lastName";
 
   factory User.fromJson(Map<String, Object?> json) => _$UserFromJson(json);
 }

@@ -2,6 +2,32 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:project_data/entities/user.dart';
 import 'package:project_repository/repositories/auth_repository.dart';
 
+sealed class State<E, T> {
+  const State();
+}
+
+class StateInit<E, T> extends State<E, T> {}
+
+class StateLoading<E, T> extends State<E, T> {}
+
+class StateError<E, T> extends State<E, T> {
+  const StateError(this.exception);
+
+  final E exception;
+}
+
+class StateSuccess<E, T> extends State<E, T> {
+  const StateSuccess(this.user);
+
+  final T user;
+}
+
+typedef UserState = State<Object, User>;
+typedef UserInit = StateInit<Object, User>;
+typedef UserLoading = StateLoading<Object, User>;
+typedef UserError = StateError<Object, User>;
+typedef UserSuccess = StateSuccess<Object, User>;
+
 sealed class AuthEvent {
   const AuthEvent();
 }
@@ -26,10 +52,10 @@ final class AuthLogout extends AuthEvent {
   const AuthLogout();
 }
 
-class AuthBloc extends Bloc<AuthEvent, User> {
+class AuthBloc extends Bloc<AuthEvent, UserState> {
   AuthBloc({required AuthRepository authRepository})
       : _authRepository = authRepository,
-        super(const User.initial()) {
+        super(StateInit()) {
     on<AuthShowUser>(_onShowUser);
     on<AuthLogin>(_onLogin);
     on<AuthLogout>(_onLogout);
@@ -37,36 +63,38 @@ class AuthBloc extends Bloc<AuthEvent, User> {
 
   late final AuthRepository _authRepository;
 
-  Future<void> _onLogin(AuthLogin event, Emitter<User> emit) async {
+  Future<void> _onLogin(AuthLogin event, Emitter<UserState> emit) async {
     try {
-      emit(User.loading());
-      final UserLoaded user = await _authRepository.login(
-        userName: event.userName,
-        password: event.password,
-        type: event.type,
+      emit(StateLoading());
+      final UserSuccess user = StateSuccess(
+        await _authRepository.login(
+          userName: event.userName,
+          password: event.password,
+          type: event.type,
+        ),
       );
       emit(user);
     } catch (e, stackTrace) {
-      emit(User.error(e));
+      emit(StateError(e));
     }
   }
 
-  Future<void> _onShowUser(AuthShowUser event, Emitter<User> emit) async {
+  Future<void> _onShowUser(AuthShowUser event, Emitter<UserState> emit) async {
     try {
-      emit(User.loading());
-      final UserLoaded user = await _authRepository.loggedUser();
+      emit(StateLoading());
+      final UserSuccess user = StateSuccess(await _authRepository.loggedUser());
       emit(user);
     } catch (e, stackTrace) {
-      emit(User.error(e));
+      emit(StateError(e));
     }
   }
 
-  void _onLogout(AuthLogout event, Emitter<User> emit) {
+  void _onLogout(AuthLogout event, Emitter<UserState> emit) {
     try {
       _authRepository.logout();
-      emit(User.initial());
+      emit(StateInit());
     } catch (e, stackTrace) {
-      emit(User.error(e));
+      emit(StateError(e));
     }
   }
 }
