@@ -1,11 +1,9 @@
 import 'dart:convert';
 
 import 'package:flutter/widgets.dart';
-import 'package:project_data/entities/user.dart';
 import 'package:project_repository/clients/http_client.dart';
 import 'package:project_repository/global.dart';
 
-import 'package:project_repository/repositories/auth_repository.dart';
 import 'package:test/test.dart';
 
 void main() {

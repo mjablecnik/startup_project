@@ -3,3 +3,6 @@
 *.iml
 build/
 .metadata
+
+# FVM Version Cache
+.fvm/

@@ -1,0 +1,8 @@
+# melos_managed_dependency_overrides: project_common,project_data,project_repository
+dependency_overrides:
+  project_common:
+    path: ../project_common
+  project_data:
+    path: ../project_data
+  project_repository:
+    path: ../project_repository
