@@ -1,4 +1,8 @@
 main
-flutter_app
+app
+app:data
+app:repository
+app:state
+app:view
 design_package
 cli_script
