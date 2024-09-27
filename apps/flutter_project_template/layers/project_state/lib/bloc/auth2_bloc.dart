@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:project_data/entities/user.dart';
 import 'package:project_repository/repositories/auth_repository.dart';
-import 'package:project_state/core.dart';
+import 'package:project_state/core2.dart';
 
 typedef _UserStateEmitter = Emitter<State<Exception, User>>;
 

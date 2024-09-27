@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:project_data/entities/user.dart';
 import 'package:project_repository/repositories/auth_repository.dart';
-import 'package:project_state/core.dart';
+import 'package:project_state/core1.dart';
 
 typedef UserState = State<Object, User>;
 typedef UserInit = StateInit<Object, User>;

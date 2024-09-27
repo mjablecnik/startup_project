@@ -1,7 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:project_data/entities/user.dart';
 import 'package:project_repository/repositories/auth_repository.dart';
-import 'package:project_state/core.dart';
 
 class UserStateInit extends UserState {
   const UserStateInit([User? state]) : super(data: state);
