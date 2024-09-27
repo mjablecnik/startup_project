@@ -1,26 +1,7 @@
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:bloc/bloc.dart';
 import 'package:project_data/entities/user.dart';
 import 'package:project_repository/repositories/auth_repository.dart';
-
-sealed class State<E, T> {
-  const State();
-}
-
-class StateInit<E, T> extends State<E, T> {}
-
-class StateLoading<E, T> extends State<E, T> {}
-
-class StateError<E, T> extends State<E, T> {
-  const StateError(this.exception);
-
-  final E exception;
-}
-
-class StateSuccess<E, T> extends State<E, T> {
-  const StateSuccess(this.user);
-
-  final T user;
-}
+import 'package:project_state/core.dart';
 
 typedef UserState = State<Object, User>;
 typedef UserInit = StateInit<Object, User>;
