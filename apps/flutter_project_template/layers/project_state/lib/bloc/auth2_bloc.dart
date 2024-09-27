@@ -29,8 +29,8 @@ final class AuthLogout extends AuthEvent {
   const AuthLogout();
 }
 
-class Auth2Bloc extends TripleBloc<AuthEvent, User, Exception> {
-  Auth2Bloc({required AuthRepository authRepository})
+class AuthBloc extends TripleBloc<AuthEvent, User, Exception> {
+  AuthBloc({required AuthRepository authRepository})
       : _authRepository = authRepository,
         super() {
     handle<AuthLogin>(_onLogin);

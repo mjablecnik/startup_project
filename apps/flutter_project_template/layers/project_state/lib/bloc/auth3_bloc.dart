@@ -6,12 +6,15 @@ import 'package:project_state/core.dart';
 class UserStateInit extends UserState {
   const UserStateInit([User? state]) : super(data: state);
 }
+
 class UserStateLoading extends UserState {
   const UserStateLoading() : super(isLoading: true);
 }
+
 class UserStateError extends UserState {
   const UserStateError(Exception e) : super(error: e);
 }
+
 class UserStateSuccess extends UserState {
   const UserStateSuccess(User state) : super(data: state);
 }
@@ -28,9 +31,13 @@ abstract class UserState {
   });
 
   factory UserState.init([User? user]) = UserStateInit;
+
   factory UserState.reset([User? user]) = UserStateInit;
+
   factory UserState.loading() = UserStateLoading;
+
   factory UserState.error(Exception error) = UserStateError;
+
   factory UserState.success(User user) = UserStateSuccess;
 }
 
