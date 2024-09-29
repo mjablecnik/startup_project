@@ -6,24 +6,24 @@ import 'package:project_repository/repositories/auth_repository.dart';
 part 'auth3_bloc.freezed.dart';
 
 @freezed
-class UserState with _$UserState {
+sealed class UserState with _$UserState {
   const UserState._();
 
-  const factory UserState({
-    required bool isLoading,
-    required Exception? error,
-    required User? data,
-  }) = _UserState;
+  //const factory UserState({
+  //  required bool isLoading,
+  //  required Exception? error,
+  //  required User? data,
+  //}) = _UserState;
 
-  factory UserState.init([User? user]) = UserStateInit;
+  const factory UserState.init([User? user]) = UserStateInit;
 
   factory UserState.reset([User? user]) => UserStateInit(user);
 
-  factory UserState.loading() = UserStateLoading;
+  const factory UserState.loading() = UserStateLoading;
 
-  factory UserState.error(Exception error) = UserStateError;
+  const factory UserState.failure(Exception error) = UserStateFailure;
 
-  factory UserState.success(User user) = UserStateSuccess;
+  const factory UserState.success(User user) = UserStateSuccess;
 }
 
 sealed class AuthEvent {
@@ -73,7 +73,7 @@ class AuthBloc extends Bloc<AuthEvent, UserState> {
       );
       emit(user);
     } catch (e, stackTrace) {
-      emit(UserState.error(e as Exception));
+      emit(UserState.failure(e as Exception));
     }
   }
 
@@ -83,7 +83,7 @@ class AuthBloc extends Bloc<AuthEvent, UserState> {
       final UserState user = UserState.success(await _authRepository.loggedUser());
       emit(user);
     } catch (e, stackTrace) {
-      emit(UserState.error(e as Exception));
+      emit(UserState.failure(e as Exception));
     }
   }
 
@@ -92,7 +92,7 @@ class AuthBloc extends Bloc<AuthEvent, UserState> {
       _authRepository.logout();
       emit(UserState.reset());
     } catch (e, stackTrace) {
-      emit(UserState.error(e as Exception));
+      emit(UserState.failure(e as Exception));
     }
   }
 }
