@@ -1,37 +1,23 @@
 import 'package:bloc/bloc.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:project_data/entities/user.dart';
 import 'package:project_repository/repositories/auth_repository.dart';
 
-class UserStateInit extends UserState {
-  const UserStateInit([User? state]) : super(data: state);
-}
+part 'auth3_bloc.freezed.dart';
 
-class UserStateLoading extends UserState {
-  const UserStateLoading() : super(isLoading: true);
-}
+@freezed
+class UserState with _$UserState {
+  const UserState._();
 
-class UserStateError extends UserState {
-  const UserStateError(Exception e) : super(error: e);
-}
-
-class UserStateSuccess extends UserState {
-  const UserStateSuccess(User state) : super(data: state);
-}
-
-abstract class UserState {
-  final bool isLoading;
-  final Exception? error;
-  final User? data;
-
-  const UserState({
-    this.isLoading = false,
-    this.error,
-    this.data,
-  });
+  const factory UserState({
+    required bool isLoading,
+    required Exception? error,
+    required User? data,
+  }) = _UserState;
 
   factory UserState.init([User? user]) = UserStateInit;
 
-  factory UserState.reset([User? user]) = UserStateInit;
+  factory UserState.reset([User? user]) => UserStateInit(user);
 
   factory UserState.loading() = UserStateLoading;
 
