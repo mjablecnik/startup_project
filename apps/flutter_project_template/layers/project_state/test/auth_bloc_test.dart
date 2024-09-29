@@ -1,3 +1,4 @@
+import 'package:bloc_test/bloc_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:project_repository/clients/http_client.dart';
 import 'package:project_repository/global.dart';
@@ -9,23 +10,38 @@ import 'mock_data.dart';
 import 'setup.dart';
 
 void main() {
-  test('AuthBloc test', () async {
-    print('Test123:');
-    final testVar = 10;
-    expect(testVar, 10);
-  });
+  late AuthBloc counterBloc;
 
   group(AuthBloc, () {
-    late AuthBloc counterBloc;
-
     setUp(() {
       setupData(fakeData, useFakeData: true);
       counterBloc = AuthBloc(authRepository: repositoryInjector.get<AuthRepository>());
     });
+    tearDown(() => resetInjector());
 
-    test('initial state is 0', () {
-      expect(counterBloc.state, UserState.init());
-    });
+    blocTest(
+      'Auth Login',
+      build: () => counterBloc,
+      act: (bloc) => bloc.add(AuthLogin(
+        userName: "emilys",
+        password: "emilyspass",
+        type: LoginType.token,
+      )),
+      expect: () => [
+        UserState.loading(),
+        UserState.success(expectedLoginUser),
+      ],
+    );
+
+    blocTest(
+      'Get logged user',
+      build: () => counterBloc,
+      act: (bloc) => bloc.add(AuthShowUser()),
+      expect: () => [
+        UserState.loading(),
+        UserState.success(expectedLoggedUser),
+      ],
+    );
   });
 }
 

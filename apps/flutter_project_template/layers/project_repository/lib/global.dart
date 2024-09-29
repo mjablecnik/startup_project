@@ -20,6 +20,10 @@ setupInjector({required HttpClient httpClient}) {
     ..commit();
 }
 
+resetInjector() {
+  repositoryInjector = AutoInjector();
+}
+
 class StoreKeys {
   static const deviceId = 'deviceId';
   static const loggedUser = 'loggedUser';

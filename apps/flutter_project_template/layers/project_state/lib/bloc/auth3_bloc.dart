@@ -9,12 +9,6 @@ part 'auth3_bloc.freezed.dart';
 sealed class UserState with _$UserState {
   const UserState._();
 
-  //const factory UserState({
-  //  required bool isLoading,
-  //  required Exception? error,
-  //  required User? data,
-  //}) = _UserState;
-
   const factory UserState.init([User? user]) = UserStateInit;
 
   factory UserState.reset([User? user]) => UserStateInit(user);
