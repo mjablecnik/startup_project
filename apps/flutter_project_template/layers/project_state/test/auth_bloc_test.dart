@@ -3,7 +3,9 @@ import 'package:mocktail/mocktail.dart';
 import 'package:project_repository/clients/http_client.dart';
 import 'package:project_repository/global.dart';
 import 'package:project_repository/repositories/auth_repository.dart';
-import 'package:project_state/bloc/auth3_bloc.dart';
+import 'package:project_state/bloc/auth_bloc.dart';
+import 'package:project_state/events/auth_events.dart';
+import 'package:project_state/states/auth_state.dart';
 import 'package:test/test.dart';
 
 import 'mock_data.dart';
